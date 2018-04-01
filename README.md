@@ -14,9 +14,13 @@ Thank you.
  }
  
  ...
+ apply plugin: 'kotlin-kapt'
  
  dependencies {
      implementation 'com.github.prongbang:glidesvgutil:1.0.0'
+     implementation 'com.github.bumptech.glide:glide:4.6.1'
+     kapt 'com.github.bumptech.glide:compiler:4.6.1'
+     implementation 'com.caverock:androidsvg:1.2.1'
  }
 ```
 
