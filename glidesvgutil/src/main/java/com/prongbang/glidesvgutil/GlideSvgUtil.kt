@@ -51,12 +51,14 @@ class GlideSvgUtil(private val context: Context) {
         return this
     }
 
-    fun isCircle() {
+    fun isCircle(): GlideSvgUtil  {
         requestOptions = RequestOptions.circleCropTransform()
+        return this
     }
 
-    fun apply(resuestOptions: RequestOptions) {
+    fun apply(requestOptions: RequestOptions): GlideSvgUtil  {
         this.requestOptions = requestOptions
+        return this
     }
 
     inner class Builder(private var requestBuilder: RequestBuilder<PictureDrawable>) {
