@@ -12,6 +12,7 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 
 /**
@@ -22,6 +23,7 @@ class GlideSvgUtil(private val context: Context) {
     private var progressBar: ProgressBar? = null
     private var placeholderRes: Int? = null
     private var imageErrorRes: Int? = null
+    private var requestOptions: RequestOptions? = null
 
     fun builder(): Builder {
         val glideRequest = GlideApp.with(context).`as`(PictureDrawable::class.java)
@@ -49,28 +51,32 @@ class GlideSvgUtil(private val context: Context) {
         return this
     }
 
+    fun isCircle() {
+        requestOptions = RequestOptions.circleCropTransform()
+    }
+
+    fun apply(resuestOptions: RequestOptions) {
+        this.requestOptions = requestOptions
+    }
+
     inner class Builder(private var requestBuilder: RequestBuilder<PictureDrawable>) {
 
         fun load(imageView: ImageView, rawImage: Int) {
             val uri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.packageName + "/" + rawImage)
-            requestBuilder.load(uri).listener(object : RequestListener<PictureDrawable> {
-
-                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<PictureDrawable>?, isFirstResource: Boolean): Boolean {
-                    progressBar?.visibility = View.GONE
-                    return false
-                }
-
-                override fun onResourceReady(resource: PictureDrawable?, model: Any?, target: Target<PictureDrawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                    progressBar?.visibility = View.GONE
-                    return false
-                }
-
-            }).into(imageView)
+            val requestBuilder = requestBuilder.load(uri).listener(listener())
+            if (requestOptions != null) requestBuilder.apply(requestOptions!!)
+            requestBuilder.into(imageView)
         }
 
         fun load(imageView: ImageView, url: String) {
             val uri = Uri.parse(url)
-            requestBuilder.load(uri).listener(object : RequestListener<PictureDrawable> {
+            val requestBuilder = requestBuilder.load(uri).listener(listener())
+            if (requestOptions != null) requestBuilder.apply(requestOptions!!)
+            requestBuilder.into(imageView)
+        }
+
+        private fun listener(): RequestListener<PictureDrawable> {
+            return object : RequestListener<PictureDrawable> {
 
                 override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<PictureDrawable>?, isFirstResource: Boolean): Boolean {
                     progressBar?.visibility = View.GONE
@@ -82,7 +88,7 @@ class GlideSvgUtil(private val context: Context) {
                     return false
                 }
 
-            }).into(imageView)
+            }
         }
     }
 
