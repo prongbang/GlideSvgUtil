@@ -10,7 +10,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        GlideSvgUtil(this).builder().load(ivPreviewFromUrl, "https://image.flaticon.com/icons/svg/789/789440.svg")
+        GlideSvgUtil(this).builder().load(ivPreviewFromUrl, "https://image.flaticon.com/icons/svg/825/825730.svg")
 
         GlideSvgUtil(this).builder().load(ivPreviewFromRes, R.raw.flower)
 

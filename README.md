@@ -17,7 +17,7 @@ Thank you.
  apply plugin: 'kotlin-kapt'
  
  dependencies {
-     implementation 'com.github.prongbang:glidesvgutil:1.0.2'
+     implementation 'com.github.prongbang:glidesvgutil:1.0.3'
      implementation 'com.github.bumptech.glide:glide:4.6.1'
      kapt 'com.github.bumptech.glide:compiler:4.6.1'
      implementation 'com.caverock:androidsvg:1.2.1'
@@ -34,3 +34,25 @@ GlideSvgUtil(this).builder().load(ivPreviewFromUrl, "https://image.flaticon.com/
 ```kotlin
 GlideSvgUtil(this).builder().load(ivPreviewFromRes, R.raw.flower)
 ```
+
+> Circle Image View
+- Dependencies
+```
+implementation "com.android.support:cardview-v7:27.1.1"
+```
+- Layout
+```xml
+<android.support.v7.widget.CardView
+    android:layout_width="200dp"
+    android:layout_height="200dp"
+    android:shape="ring"
+    app:cardCornerRadius="100dp">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/ivPreviewFromUrl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorAccent" />
+</android.support.v7.widget.CardView>
+```
+- 

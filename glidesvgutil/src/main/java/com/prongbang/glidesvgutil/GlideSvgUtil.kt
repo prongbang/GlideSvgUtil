@@ -51,30 +51,16 @@ class GlideSvgUtil(private val context: Context) {
         return this
     }
 
-    fun isCircle(): GlideSvgUtil  {
-        requestOptions = RequestOptions.circleCropTransform()
-        return this
-    }
-
-    fun apply(requestOptions: RequestOptions): GlideSvgUtil  {
-        this.requestOptions = requestOptions
-        return this
-    }
-
     inner class Builder(private var requestBuilder: RequestBuilder<PictureDrawable>) {
 
         fun load(imageView: ImageView, rawImage: Int) {
             val uri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.packageName + "/" + rawImage)
-            val requestBuilder = requestBuilder.load(uri).listener(listener())
-            if (requestOptions != null) requestBuilder.apply(requestOptions!!)
-            requestBuilder.into(imageView)
+            requestBuilder.load(uri).listener(listener()).into(imageView)
         }
 
         fun load(imageView: ImageView, url: String) {
             val uri = Uri.parse(url)
-            val requestBuilder = requestBuilder.load(uri).listener(listener())
-            if (requestOptions != null) requestBuilder.apply(requestOptions!!)
-            requestBuilder.into(imageView)
+            requestBuilder.load(uri).listener(listener()).into(imageView)
         }
 
         private fun listener(): RequestListener<PictureDrawable> {
